@@ -286,7 +286,7 @@
   }
   @media (min-width: 720px) { .stats { grid-template-columns: repeat(4, 1fr); } }
   .stat { background: var(--bg); padding: 30px 10px 26px; text-align: center; }
-  .stat b { display: block; font: 500 clamp(46px, 6vw, 66px)/1 "Cormorant Garamond", Georgia, serif; }
+  .stat b { display: block; font: 500 clamp(46px, 6vw, 66px)/1 "Cormorant Garamond", Georgia, serif; font-variant-numeric: lining-nums; }
   .stat b sup { font-size: .45em; color: var(--gold); margin-left: 2px; }
   .stat > span {
     display: block; margin-top: 8px; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
@@ -1197,13 +1197,35 @@
     reveals.forEach(show);
   }
 
-  // Website views: counted once per browser session by the free Abacus counter.
-  // Local copies use a separate "dev" key so testing never inflates the real number.
+  // Visitor stats for stats.html, stored in free Abacus counters.
+  // Local copies count under "dev-" keys so testing never inflates the real numbers.
+  const STATS_NS = 'rambharath199727-portfolio';
+  const statKey = k => (location.hostname.endsWith('github.io') ? '' : 'dev-') + k;
+  const track = k => fetch(`https://abacus.jasoncameron.dev/hit/${STATS_NS}/${statKey(k)}`, { keepalive: true }).catch(() => {});
+
+  document.addEventListener('click', e => {
+    const el = e.target.closest('a, button');
+    if (!el) return;
+    const href = el.getAttribute('href') || '';
+    if (href === 'resume.html') track('click-resume');
+    else if (href.startsWith('mailto:')) track('click-email');
+    else if (href.includes('github.com')) track('click-github');
+    else if (href.includes('linkedin.com')) track('click-linkedin');
+    else if (href === '#projects' && el.classList.contains('btn')) track('click-projects');
+    else if (el.id === 'langBtn' && root.lang === 'ta') track('click-tamil');
+    else if (el.id === 'themeBtn') track('click-theme');
+  });
+
+  // Website views: counted once per browser session, along with that day's count and the device type
   const viewEl = document.getElementById('viewCount');
   if (viewEl) {
     const key = location.hostname.endsWith('github.io') ? 'views' : 'views-dev';
     let seen = false;
     try { seen = sessionStorage.getItem('rb-viewed') === '1'; } catch (e) {}
+    if (!seen) {
+      track('day-' + new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date()));
+      track('device-' + (matchMedia('(max-width: 719px)').matches ? 'mobile' : 'desktop'));
+    }
     fetch(`https://abacus.jasoncameron.dev/${seen ? 'get' : 'hit'}/rambharath199727-portfolio/${key}`)
       .then(r => (r.ok ? r.json() : null))
       .then(data => {
@@ -1250,6 +1272,7 @@
         if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || res.status);
         status.className = 'suggest-status ok';
         status.textContent = msg('ok');
+        track('suggestions-sent');
         form.reset();
       } catch (err) {
         status.className = 'suggest-status err';
