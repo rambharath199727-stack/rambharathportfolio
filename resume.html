@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RamBharath Baskar · Resume</title>
+<meta name="description" content="Resume of RamBharath Baskar, Software / Web Developer in Chennai.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ece8e0;
+    --paper: #ffffff;
+    --text: #1b1a17;
+    --muted: #5e594f;
+    --border: #e6e0d4;
+    --gold: #9c7a45;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 13px/1.55 "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; margin: 0; }
+
+  /* Toolbar (screen only) */
+  .toolbar {
+    max-width: 210mm; margin: 24px auto 12px; padding: 0 16px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .toolbar a { color: var(--muted); font-size: 13px; }
+  .toolbar a:hover { color: var(--gold); }
+  .print-btn {
+    border: 0; border-radius: 999px; background: var(--text); color: #fff; cursor: pointer;
+    padding: 10px 20px; font: 500 13.5px "Inter", sans-serif;
+  }
+  .print-btn:hover { background: var(--gold); }
+
+  /* Page */
+  .page {
+    max-width: 210mm; margin: 0 auto 48px; background: var(--paper);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, .25); padding: 15mm 15mm 13mm;
+  }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 18px; }
+  h1 { font-size: 40px; line-height: 1; letter-spacing: .01em; }
+  .title { font: italic 500 19px "Cormorant Garamond", Georgia, serif; color: var(--gold); margin: 4px 0 12px; }
+  .contact { display: flex; flex-wrap: wrap; gap: 4px 18px; color: var(--muted); font-size: 12px; }
+  .contact a:hover { color: var(--gold); }
+
+  .cols { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  @media (min-width: 700px) { .cols { grid-template-columns: 1fr 2.1fr; gap: 28px; } }
+  @media print { .cols { grid-template-columns: 1fr 2.1fr; gap: 28px; } }
+
+  h2 {
+    font-size: 17px; letter-spacing: .02em; color: var(--text);
+    padding-bottom: 4px; margin: 0 0 10px; border-bottom: 1px solid var(--gold);
+  }
+  section { margin-bottom: 18px; break-inside: avoid; }
+  section:last-child { margin-bottom: 0; }
+  p { margin: 0; }
+  .summary { color: var(--muted); }
+
+  ul { margin: 6px 0 0; padding: 0; list-style: none; }
+  li { position: relative; padding-left: 13px; margin-bottom: 3px; }
+  li::before { content: ""; position: absolute; left: 0; top: .72em; width: 6px; height: 1px; background: var(--gold); }
+  .plain li { padding-left: 0; }
+  .plain li::before { display: none; }
+
+  .side h3 { font: 600 12px "Inter", sans-serif; margin: 10px 0 3px; color: var(--text); }
+  .side h3:first-of-type { margin-top: 0; }
+  .side p, .side li { color: var(--muted); font-size: 12px; }
+  .side .item { margin-bottom: 8px; }
+  .side .item strong { color: var(--text); font-weight: 500; display: block; }
+
+  .job { margin-bottom: 13px; break-inside: avoid; }
+  .job:last-child { margin-bottom: 0; }
+  .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 12px; align-items: baseline; }
+  .job h3 { font-size: 16.5px; }
+  .when { color: var(--gold); font-size: 11.5px; font-weight: 500; white-space: nowrap; }
+  .org { color: var(--muted); font-size: 12px; }
+  .job li { color: #35322c; }
+
+  .proj { margin-bottom: 8px; }
+  .proj strong { font-weight: 600; }
+  .proj span { color: var(--muted); }
+
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; }
+    .toolbar { display: none; }
+    .page { box-shadow: none; margin: 0; max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="index.html">← Back to portfolio</a>
+  <button class="print-btn" onclick="window.print()">Download PDF</button>
+</div>
+
+<main class="page">
+  <header>
+    <h1>RamBharath Baskar</h1>
+    <div class="title">Software / Web Developer</div>
+    <div class="contact">
+      <a href="mailto:rambaskarpc@gmail.com">rambaskarpc@gmail.com</a>
+      <span>Chennai, Tamil Nadu</span>
+      <a href="https://github.com/rambharath199727-stack">github.com/rambharath199727-stack</a>
+      <a href="https://www.linkedin.com/in/ram-bharath-864081219/">linkedin.com/in/ram-bharath-864081219</a>
+    </div>
+  </header>
+
+  <div class="cols">
+    <aside class="side">
+      <section>
+        <h2>Skills</h2>
+        <h3>Web Development</h3>
+        <p>PHP, Laravel, MySQL, REST APIs, admin dashboards</p>
+        <h3>Integrations</h3>
+        <p>Payment gateway, SMS API, email automation</p>
+        <h3>AI Tools</h3>
+        <p>Claude, ChatGPT, DeepSeek</p>
+        <h3>Automation</h3>
+        <p>PLC (Allen Bradley, Omron), Siemens PCS7, SCADA / HMI, Ladder &amp; FBD</p>
+        <h3>Engineering</h3>
+        <p>AutoCAD, Primavera P6, process simulation, NDT inspection, MS Office</p>
+      </section>
+
+      <section>
+        <h2>Certifications</h2>
+        <ul class="plain">
+          <li class="item"><strong>Primavera Planning Tools &amp; Techniques (P6)</strong>Qatar</li>
+          <li class="item"><strong>QA/QC (Welding &amp; Piping) Professional</strong>BSS Skill Mission</li>
+          <li class="item"><strong>Process Simulation</strong>SIM Info-systems</li>
+          <li class="item"><strong>Process Design &amp; Simulation</strong>Petrofac</li>
+          <li class="item"><strong>NDT Level II</strong></li>
+          <li class="item"><strong>Diploma in Cartoon &amp; Animation</strong></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <div class="item"><strong>B.E. Petrochemical Engineering</strong>SVS College of Engineering, Anna University · 2018</div>
+        <div class="item"><strong>Higher Secondary (HSE)</strong>Vidyaa Vikas Matriculation Higher Secondary School · 2014</div>
+        <div class="item"><strong>SSLC</strong>Eden Gardens Matriculation Higher Secondary School · 2012</div>
+      </section>
+
+      <section>
+        <h2>Languages</h2>
+        <p>English, Tamil, Hindi, Malayalam</p>
+      </section>
+    </aside>
+
+    <div>
+      <section>
+        <h2>Summary</h2>
+        <p class="summary">Software / Web Developer with a B.E. in Petrochemical Engineering and about 6 years of experience across web development, industrial automation, NDT inspection and machinery service. I currently build admission and counselling portals, admin dashboards and API integrations for Tamil Nadu government universities using PHP, Laravel and MySQL, with AI-assisted development.</p>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+
+        <div class="job">
+          <div class="job-head"><h3>Web Software Engineer</h3><span class="when">Apr 2025 – Present</span></div>
+          <div class="org">Trophysystems · Chennai · Full-time, Hybrid</div>
+          <ul>
+            <li>Built admission and counselling portals for TNJFU and TANUVAS (2026–27), and the TNJFU PG Admission Portal (ongoing)</li>
+            <li>Admin dashboards to manage applications and counselling; a scrutiny window for officials to verify applications</li>
+            <li>Candidate dashboard where students track their counselling status</li>
+            <li>Integrated SMS, email and payment gateway APIs; automated email reminders for candidates</li>
+            <li>Enhanced the OMCL website and built its admin dashboard</li>
+            <li>AI-assisted development with Claude, ChatGPT and DeepSeek</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>RPO / NDT Multi Technician</h3><span class="when">Dec 2023 – Feb 2025</span></div>
+          <div class="org">Pemco Inspection Company · Doha, Qatar · On-site</div>
+          <ul>
+            <li>Performed non-destructive testing and inspection work on site</li>
+            <li>Followed strict safety and quality procedures, with precise reporting and documentation</li>
+            <li>Worked from 2D/3D drawings and GD&amp;T</li>
+            <li>Handled client calls on RFQs and technical queries, and completed proposals on time</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>Application Engineer</h3><span class="when">Oct 2021 – Oct 2022</span></div>
+          <div class="org">Technocrat Automation Pvt. Limited · Chennai · On-site</div>
+          <ul>
+            <li>RO Plant Setup: Siemens PCS7-based control system, from configuration to implementation</li>
+            <li>80 &amp; 20 Ton Draw Bench Control System for Tube Products of India</li>
+            <li>Programmed PLCs in Ladder and FBD (Allen Bradley, Omron); built and tested custom Function Blocks to industry standards</li>
+            <li>Designed HMI and SCADA screens; prepared IO lists and built relay-based circuits</li>
+            <li>Commissioned machines at customer sites; debugged Ethernet and DeviceNet communications</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head"><h3>Service Engineer</h3><span class="when">Jul 2019 – Jun 2021</span></div>
+          <div class="org">Vyoncut Machinery · Chennai</div>
+          <ul>
+            <li>Installed welding machines and demonstrated their working procedure, including weld strength tests</li>
+            <li>Worked with plasma welding and gas welding consumables</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

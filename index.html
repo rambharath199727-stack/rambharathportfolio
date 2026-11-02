@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RamBharath Baskar · Portfolio</title>
+<meta name="description" content="RamBharath Baskar — Software / Web Developer in Chennai building admission portals, dashboards and API integrations with PHP, Laravel and MySQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+Tamil:wght@400;500;600&family=Noto+Serif+Tamil:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f4;
+    --surface: #ffffff;
+    --text: #1b1a17;
+    --muted: #6d675d;
+    --faint: #a39c90;
+    --border: #e9e4da;
+    --gold: #9c7a45;
+    --gold-soft: #f3ece0;
+    --ink: #1b1a17;
+    --ink-text: #faf8f4;
+    --shadow: 0 1px 2px rgba(27, 26, 23, .04), 0 12px 32px -12px rgba(27, 26, 23, .12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111110;
+      --surface: #191917;
+      --text: #eeeae2;
+      --muted: #a29b8f;
+      --faint: #6f695f;
+      --border: #2a2925;
+      --gold: #cfae74;
+      --gold-soft: #2a241a;
+      --ink: #eeeae2;
+      --ink-text: #111110;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -16px rgba(0, 0, 0, .6);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111110;
+    --surface: #191917;
+    --text: #eeeae2;
+    --muted: #a29b8f;
+    --faint: #6f695f;
+    --border: #2a2925;
+    --gold: #cfae74;
+    --gold-soft: #2a241a;
+    --ink: #eeeae2;
+    --ink-text: #111110;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 16px 40px -16px rgba(0, 0, 0, .6);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.75 "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif, h1, h2, h3, .role { font-family: "Cormorant Garamond", Georgia, serif; font-optical-sizing: auto; }
+  html[lang="ta"] body { font-family: "Noto Sans Tamil", "Inter", system-ui, sans-serif; }
+  html[lang="ta"] h1, html[lang="ta"] h2, html[lang="ta"] h3, html[lang="ta"] .role {
+    font-family: "Noto Serif Tamil", "Cormorant Garamond", Georgia, serif; letter-spacing: 0;
+  }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: var(--gold-soft); color: var(--text); }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 32px; } }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s;
+  }
+  nav.scrolled { border-bottom-color: var(--border); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
+  .logo {
+    font: italic 600 28px "Cormorant Garamond", Georgia, serif; letter-spacing: -0.01em;
+  }
+  .logo span { color: var(--gold); }
+  .links { display: flex; gap: 26px; align-items: center; font-size: 13.5px; }
+  .links a { color: var(--muted); white-space: nowrap; position: relative; transition: color .2s; }
+  .links a::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px;
+    background: var(--gold); transform: scaleX(0); transition: transform .25s;
+  }
+  .links a:hover { color: var(--text); }
+  .links a:hover::after, .links a.active::after { transform: scaleX(1); }
+  .links a.active { color: var(--text); }
+  .nav-btn {
+    background: none; border: 1px solid var(--border); color: var(--text);
+    border-radius: 999px; height: 34px; min-width: 34px; cursor: pointer; font-size: 14px;
+    transition: border-color .2s, background .2s;
+  }
+  .nav-btn:hover { border-color: var(--gold); }
+  #langBtn { padding: 0 14px; font: 500 12.5px "Noto Sans Tamil", "Inter", sans-serif; }
+  @media (max-width: 680px) { .links a.hide-sm { display: none; } .links { gap: 16px; } }
+  @media (max-width: 420px) { .links a.hide-xs { display: none; } .links { gap: 10px; } }
+
+  /* Hero */
+  header { padding: 96px 0 88px; display: grid; gap: 48px; align-items: center; }
+  @media (min-width: 820px) { header { grid-template-columns: 1fr auto; padding: 128px 0 112px; } }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+  }
+  .kicker::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+  html[lang="ta"] .kicker { letter-spacing: .04em; }
+  h1 {
+    font-size: clamp(50px, 9vw, 94px); font-weight: 500; line-height: 1; letter-spacing: -0.012em;
+    margin: 22px 0 14px;
+  }
+  html[lang="ta"] h1 { font-size: clamp(34px, 6.5vw, 60px); line-height: 1.25; }
+  .role { font-size: clamp(24px, 3.4vw, 32px); font-style: italic; font-weight: 400; color: var(--muted); margin: 0 0 28px; }
+  html[lang="ta"] .role { font-style: normal; font-weight: 400; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 0; color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+  .meta span:not(:last-child)::after { content: "·"; margin: 0 12px; color: var(--faint); }
+  .lead { font-size: 17.5px; color: var(--muted); max-width: 560px; margin: 0; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 999px;
+    font-weight: 500; font-size: 14.5px; border: 1px solid var(--border); background: transparent;
+    transition: transform .2s, border-color .2s, background .2s, color .2s;
+  }
+  .btn:hover { border-color: var(--text); transform: translateY(-1px); }
+  .btn.primary { background: var(--ink); border-color: var(--ink); color: var(--ink-text); }
+  .btn.primary:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+  .socials { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 28px; font-size: 13.5px; }
+  .socials a { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); transition: color .2s; }
+  .socials a:hover { color: var(--gold); }
+  .socials svg { width: 16px; height: 16px; }
+
+  /* Monogram */
+  .monogram {
+    display: none; position: relative; width: 260px; height: 260px; border-radius: 50%;
+    border: 1px solid var(--border); place-items: center;
+  }
+  .monogram::before {
+    content: ""; position: absolute; inset: 14px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 25%, var(--surface), var(--gold-soft));
+    box-shadow: var(--shadow);
+  }
+  .monogram span {
+    position: relative; font: italic 500 128px/1 "Cormorant Garamond", Georgia, serif; letter-spacing: -0.04em; color: var(--text);
+  }
+  .monogram span b { font-weight: 500; color: var(--gold); }
+  .monogram svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 40s linear infinite; }
+  .monogram text { font: 500 10.5px "Inter", sans-serif; letter-spacing: .32em; fill: var(--faint); text-transform: uppercase; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (min-width: 820px) { .monogram { display: grid; } }
+
+  /* Sections */
+  main { counter-reset: sec; }
+  section { padding: 88px 0; border-top: 1px solid var(--border); counter-increment: sec; scroll-margin-top: 40px; }
+  .sec-head { display: grid; gap: 6px; margin-bottom: 44px; }
+  @media (min-width: 820px) { .sec-head { grid-template-columns: 200px 1fr; align-items: baseline; } }
+  .sec-head::before {
+    content: counter(sec, decimal-leading-zero); font: italic 500 20px "Cormorant Garamond", Georgia, serif; color: var(--gold);
+  }
+  h2 { font-size: clamp(38px, 5.5vw, 54px); font-weight: 500; letter-spacing: -0.005em; line-height: 1.1; margin: 0; }
+  .sub { color: var(--muted); margin: 8px 0 0; font-size: 15.5px; }
+  @media (min-width: 820px) { .sec-body { margin-left: 200px; } }
+
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px;
+    transition: transform .3s, box-shadow .3s, border-color .3s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .card h3 { margin: 0 0 10px; font-size: 24px; font-weight: 600; line-height: 1.25; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+  .card ul { list-style: none; padding: 0; margin: 14px 0 0; color: var(--muted); font-size: 15px; }
+  .card li { position: relative; padding-left: 20px; margin-bottom: 7px; }
+  .card li::before { content: ""; position: absolute; left: 2px; top: .8em; width: 8px; height: 1px; background: var(--gold); }
+  .card li strong { color: var(--text); font-weight: 500; }
+
+  .num { font: italic 500 42px/1 "Cormorant Garamond", Georgia, serif; color: var(--gold); display: block; margin-bottom: 18px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .chip {
+    font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
+  }
+  .eyebrow {
+    font-size: 11.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
+  }
+  html[lang="ta"] .eyebrow, html[lang="ta"] .job-domain { letter-spacing: .03em; }
+  .tag {
+    display: inline-block; font-size: 10.5px; letter-spacing: .08em; padding: 2px 9px; border-radius: 999px;
+    background: var(--gold-soft); color: var(--gold); margin-left: 8px; vertical-align: 1px;
+  }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 34px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 7px; top: 34px; bottom: 34px; width: 1px;
+    background: linear-gradient(var(--gold), var(--border) 40%);
+  }
+  .job { position: relative; margin-bottom: 20px; }
+  .job:last-child { margin-bottom: 0; }
+  .job::before {
+    content: ""; position: absolute; left: -34px; top: 32px; width: 15px; height: 15px; border-radius: 50%;
+    background: var(--bg); border: 1px solid var(--faint);
+  }
+  .job.current::before { border-color: var(--gold); background: var(--gold); box-shadow: 0 0 0 5px var(--gold-soft); }
+  .job-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; }
+  .job-head h3 { margin: 0 0 2px; }
+  .company { color: var(--text); font-size: 14.5px; }
+  .when { color: var(--muted); font-size: 13px; text-align: right; line-height: 1.6; }
+  @media (max-width: 600px) { .when { text-align: left; } }
+  .job-domain {
+    margin-top: 14px; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--gold);
+  }
+
+  /* Projects */
+  .projects { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .projects .card.wide { grid-column: 1 / -1; padding: 36px; }
+  @media (max-width: 600px) { .projects .card.wide { padding: 26px; } }
+  .projects .card.wide h3 { font-size: clamp(27px, 3.8vw, 36px); font-weight: 500; margin: 12px 0 10px; }
+  .projects .card h3 { margin-top: 12px; }
+  .wide ul { columns: 2 260px; column-gap: 32px; }
+  .wide li { break-inside: avoid; }
+
+  /* Education */
+  .edu { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+  .edu-mark {
+    width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; flex: none;
+    background: var(--gold-soft); color: var(--gold); font: italic 400 22px "Cormorant Garamond", Georgia, serif;
+  }
+  .edu h3 { margin: 0; }
+  .edu-list { display: grid; gap: 18px; }
+  .edu-list .card ul { margin: 0; }
+
+  /* Contact */
+  .contact { text-align: center; padding: 112px 0; }
+  .contact::before { display: none; }
+  .contact h2 { font-size: clamp(44px, 7.5vw, 76px); font-style: italic; font-weight: 400; }
+  html[lang="ta"] .contact h2 { font-style: normal; }
+  .contact .sub { max-width: 520px; margin: 14px auto 0; }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 36px; }
+  .ornament { display: block; margin: 0 auto 24px; color: var(--gold); font: italic 400 22px "Cormorant Garamond", serif; }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 0 40px; color: var(--faint); font-size: 12.5px;
+    text-align: center; letter-spacing: .04em;
+  }
+
+  /* Scroll progress hairline */
+  .progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20; pointer-events: none;
+    background: linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transform: scaleX(0); transform-origin: left;
+  }
+
+  /* Gold light sweeping across a card on hover */
+  .card:not(.job) { position: relative; overflow: hidden; }
+  .card:not(.job)::after {
+    content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: translateX(-100%); transition: transform .9s ease;
+  }
+  .card:not(.job):hover::after { transform: translateX(100%); }
+
+  /* Reveal on scroll (only when JS runs) */
+  .js .reveal {
+    opacity: 0; transform: translateY(18px);
+    transition: opacity 1s ease, transform 1s cubic-bezier(.2, .7, .2, 1);
+    transition-delay: var(--d, 0ms);
+  }
+  .js .reveal.in { opacity: 1; transform: none; }
+  .js .reveal.done { transition: transform .3s, box-shadow .3s, border-color .3s; transition-delay: 0s; }
+
+  /* Letter-by-letter headings */
+  .word { display: inline-block; white-space: nowrap; }
+  .char { display: inline-block; }
+  .js .split .char { opacity: 0; transform: translateY(.5em) rotate(3deg); filter: blur(8px); }
+  .js .in .split .char {
+    animation: charIn 1.1s cubic-bezier(.2, .7, .2, 1) forwards;
+    animation-delay: calc(var(--i) * 42ms + var(--base, 0ms));
+  }
+  h1.split { --base: 250ms; }
+  @keyframes charIn { to { opacity: 1; transform: none; filter: blur(0); } }
+
+  /* Hero lines follow the name, one after another */
+  .js .hero-seq > :not(h1):not(.kicker) {
+    opacity: 0; transform: translateY(12px); transition: opacity 1s ease, transform 1s cubic-bezier(.2, .7, .2, 1);
+  }
+  .js .hero-seq.in > :not(h1):not(.kicker) { opacity: 1; transform: none; }
+  .js .hero-seq.in > .role { transition-delay: .9s; }
+  .js .hero-seq.in > .meta { transition-delay: 1.05s; }
+  .js .hero-seq.in > .lead { transition-delay: 1.2s; }
+  .js .hero-seq.in > .cta { transition-delay: 1.35s; }
+  .js .hero-seq.in > .socials { transition-delay: 1.5s; }
+  .js .kicker::before { width: 0; transition: width 1.2s cubic-bezier(.2, .7, .2, 1) .2s; }
+  .js .in .kicker::before { width: 28px; }
+
+  /* Monogram grows in, then floats gently */
+  .js .monogram.reveal { transform: scale(.88); transition: opacity 1.4s ease .5s, transform 1.4s cubic-bezier(.2, .7, .2, 1) .5s; }
+  .js .monogram.reveal.in { transform: none; }
+  .monogram span { animation: float 6s ease-in-out infinite; }
+  @keyframes float { 50% { transform: translateY(-6px); } }
+
+  /* Gold rule drawn under each section title */
+  .sec-head h2::after {
+    content: ""; display: block; width: 56px; height: 1px; margin-top: 16px; background: var(--gold);
+    transform-origin: left;
+  }
+  .js .sec-head h2::after { transform: scaleX(0); transition: transform 1.2s cubic-bezier(.2, .7, .2, 1) .6s; }
+  .js .sec-head.in h2::after { transform: scaleX(1); }
+
+  /* Ornament turns slowly into place */
+  .js .contact .ornament { transform: rotate(-90deg) scale(.6); opacity: 0; transition: transform 1.4s ease, opacity 1.4s ease; }
+  .js .contact .in .ornament { transform: none; opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal, .js .hero-seq > :not(h1):not(.kicker), .js .contact .ornament {
+      opacity: 1; transform: none; transition: none;
+    }
+    .js .split .char { opacity: 1; transform: none; filter: none; animation: none; }
+    .js .kicker::before { width: 28px; transition: none; }
+    .js .sec-head h2::after { transform: none; transition: none; }
+    .monogram svg, .monogram span { animation: none; }
+    .card:not(.job)::after { display: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<nav id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo">RB<span>.</span></a>
+    <div class="links">
+      <a href="#about" class="hide-sm" data-i18n="nav.about">About</a>
+      <a href="#experience" class="hide-xs" data-i18n="nav.exp">Experience</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#skills" class="hide-sm" data-i18n="nav.skills">Skills</a>
+      <a href="#contact" class="hide-sm" data-i18n="nav.contact">Contact</a>
+      <button id="langBtn" class="nav-btn" aria-label="Switch language">தமிழ்</button>
+      <button id="themeBtn" class="nav-btn" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap" id="top">
+  <header>
+    <div class="reveal hero-seq">
+      <div class="kicker" data-i18n="hero.kicker">Portfolio · Chennai</div>
+      <h1 data-i18n="hero.name">RamBharath Baskar</h1>
+      <p class="role" data-i18n="hero.role">Software / Web Developer</p>
+      <div class="meta">
+        <span data-i18n="meta.job">Web Software Engineer at Trophysystems</span>
+        <span data-i18n="meta.loc">Chennai, Tamil Nadu</span>
+      </div>
+      <p class="lead" data-i18n="hero.lead">I build admission and counselling portals, admin dashboards and API integrations for Tamil Nadu government universities and departments.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects" data-i18n="btn.projects">View projects</a>
+        <a class="btn" href="mailto:rambaskarpc@gmail.com" data-i18n="btn.email">Email me</a>
+        <a class="btn" href="resume.html" target="_blank" data-i18n="btn.resume">Resume ↗</a>
+      </div>
+      <div class="socials">
+        <a href="https://github.com/rambharath199727-stack" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.27 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/ram-bharath-864081219/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <div class="monogram reveal" aria-hidden="true">
+      <svg viewBox="0 0 260 260">
+        <defs><path id="ring" d="M130,130 m-112,0 a112,112 0 1,1 224,0 a112,112 0 1,1 -224,0"/></defs>
+        <text><textPath href="#ring">PHP · Laravel · MySQL · Web Developer · Chennai ·</textPath></text>
+      </svg>
+      <span>R<b>B</b></span>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="about.title">About</h2>
+        <p class="sub" data-i18n="about.sub">An engineer who moved from plant floors to the web.</p>
+      </div>
+    </div>
+    <div class="grid sec-body">
+      <div class="card reveal">
+        <span class="num">i.</span>
+        <h3 data-i18n="about.c1.h">Engineering roots</h3>
+        <p data-i18n="about.c1.p">A B.E. in Petrochemical Engineering, then welding-machine service, PLC and DCS programming in industrial automation, and on-site NDT inspection in Qatar.</p>
+      </div>
+      <div class="card reveal">
+        <span class="num">ii.</span>
+        <h3 data-i18n="about.c2.h">Web developer today</h3>
+        <p data-i18n="about.c2.p">Since 2025 I've built government admission and counselling portals used by students and university officials.</p>
+      </div>
+      <div class="card reveal">
+        <span class="num">iii.</span>
+        <h3 data-i18n="about.c3.h">AI-assisted workflow</h3>
+        <p data-i18n="about.c3.p">I use Claude, ChatGPT and DeepSeek to move faster, and I review and test everything before it ships.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="exp.title">Experience</h2>
+        <p class="sub" data-i18n="exp.sub">About 6 years across software, automation, inspection and machinery service.</p>
+      </div>
+    </div>
+
+    <div class="timeline sec-body">
+      <div class="job current card reveal">
+        <div class="job-head">
+          <div>
+            <h3>Web Software Engineer</h3>
+            <div class="company" data-i18n="job1.co">Trophysystems · Full-time</div>
+          </div>
+          <div class="when" data-i18n="job1.when">Apr 2025 – Present<br>Chennai, India · Hybrid</div>
+        </div>
+        <div class="job-domain" data-i18n="job1.domain">Software</div>
+        <ul data-i18n="job1.list">
+          <li>Build admission and counselling portals for Tamil Nadu government universities and departments</li>
+          <li>Admin dashboards, official scrutiny workflows and student-facing status dashboards</li>
+          <li>SMS, email and payment gateway API integrations</li>
+          <li>AI-assisted development with Claude, ChatGPT and DeepSeek</li>
+        </ul>
+        <div class="chips"><span class="chip">PHP</span><span class="chip">Laravel</span><span class="chip">MySQL</span><span class="chip">REST APIs</span></div>
+      </div>
+
+      <div class="job card reveal">
+        <div class="job-head">
+          <div>
+            <h3>RPO / NDT Multi Technician</h3>
+            <div class="company" data-i18n="job2.co">Pemco Inspection Company · Full-time</div>
+          </div>
+          <div class="when" data-i18n="job2.when">Dec 2023 – Feb 2025<br>Doha, Qatar · On-site</div>
+        </div>
+        <div class="job-domain" data-i18n="job2.domain">Inspection</div>
+        <ul data-i18n="job2.list">
+          <li>Performed non-destructive testing and inspection work on site</li>
+          <li>Followed strict safety and quality procedures, with precise reporting and documentation</li>
+          <li>Worked from 2D/3D drawings and GD&amp;T</li>
+          <li>Handled client calls on RFQs and technical queries, and completed proposals on time</li>
+        </ul>
+      </div>
+
+      <div class="job card reveal">
+        <div class="job-head">
+          <div>
+            <h3>Application Engineer</h3>
+            <div class="company" data-i18n="job3.co">Technocrat Automation Pvt. Limited · Full-time</div>
+          </div>
+          <div class="when" data-i18n="job3.when">Oct 2021 – Oct 2022<br>Chennai, India · On-site</div>
+        </div>
+        <div class="job-domain" data-i18n="job3.domain">Industrial Automation</div>
+        <ul data-i18n="job3.list">
+          <li>Set up a Siemens PCS7-based control system for an RO plant, from configuration to implementation</li>
+          <li>Programmed PLCs in Ladder and FBD (Allen Bradley, Omron), and built and tested custom Function Blocks to industry standards</li>
+          <li>Designed HMI and SCADA screens and interfaced them with PLCs</li>
+          <li>Prepared IO lists, built relay-based circuits and commissioned machines at customer sites</li>
+          <li>Debugged Ethernet and DeviceNet communications, and fixed faults in existing programs</li>
+        </ul>
+        <div class="chips"><span class="chip">Allen Bradley</span><span class="chip">Omron</span><span class="chip">Siemens PCS7</span><span class="chip">SCADA / HMI</span></div>
+      </div>
+
+      <div class="job card reveal">
+        <div class="job-head">
+          <div>
+            <h3>Service Engineer</h3>
+            <div class="company">Vyoncut Machinery</div>
+          </div>
+          <div class="when" data-i18n="job4.when">Jul 2019 – Jun 2021<br>Chennai, India</div>
+        </div>
+        <div class="job-domain" data-i18n="job4.domain">Machinery Service</div>
+        <ul data-i18n="job4.list">
+          <li>Installed welding machines and demonstrated their working procedure, including weld strength tests</li>
+          <li>Worked with plasma welding and gas welding consumables</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="proj.title">Projects</h2>
+        <p class="sub" data-i18n="proj.sub">Software work at Trophysystems, plus earlier automation projects.</p>
+      </div>
+    </div>
+
+    <div class="projects sec-body">
+      <div class="card wide reveal">
+        <div class="eyebrow" data-i18n="p1.eyebrow">2026–27 · Government</div>
+        <h3 data-i18n="p1.title">TNJFU &amp; TANUVAS Admission &amp; Counselling Portals</h3>
+        <p data-i18n="p1.desc">End-to-end admission and counselling systems for two Tamil Nadu state universities, covering everything from application to seat allotment.</p>
+        <ul data-i18n="p1.list">
+          <li><strong>Admin dashboard</strong> to manage applications and the counselling process</li>
+          <li><strong>Scrutiny window</strong> where officials verify candidate applications</li>
+          <li><strong>Candidate dashboard</strong> where students track their counselling status</li>
+          <li>Integrated <strong>SMS, email and payment gateway</strong> APIs</li>
+          <li><strong>Automated email reminders</strong> for candidates</li>
+          <li>Updates to the admission web pages</li>
+        </ul>
+        <div class="chips"><span class="chip">Laravel</span><span class="chip">MySQL</span><span class="chip">Payment Gateway</span><span class="chip">SMS / Email APIs</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="eyebrow"><span data-i18n="p2.eyebrow">Government</span> <span class="tag" data-i18n="p2.tag">ongoing</span></div>
+        <h3>TNJFU PG Admission Portal</h3>
+        <p data-i18n="p2.desc">An admission portal for postgraduate programmes at Tamil Nadu Dr. J. Jayalalithaa Fisheries University.</p>
+        <div class="chips"><span class="chip">Laravel</span><span class="chip">MySQL</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="eyebrow" data-i18n="p3.eyebrow">Website + Dashboard</div>
+        <h3>OMCL</h3>
+        <p data-i18n="p3.desc">Enhanced the public website and built an admin dashboard for managing its content and data.</p>
+        <div class="chips"><span class="chip">PHP</span><span class="chip">MySQL</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="eyebrow" data-i18n="p4.eyebrow">Automation · Technocrat</div>
+        <h3>RO Plant Setup</h3>
+        <p data-i18n="p4.desc">A Siemens PCS7-based control system for a reverse osmosis (RO) plant, from configuration to implementation.</p>
+        <div class="chips"><span class="chip">Siemens PCS7</span><span class="chip">DCS</span></div>
+      </div>
+
+      <div class="card reveal">
+        <div class="eyebrow" data-i18n="p5.eyebrow">Automation · Tube Products of India</div>
+        <h3>80 &amp; 20 Ton Draw Bench Control</h3>
+        <p data-i18n="p5.desc">A PLC control system for 80-ton and 20-ton draw bench machines.</p>
+        <div class="chips"><span class="chip">PLC</span><span class="chip">HMI</span><span class="chip">Ladder / FBD</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="skills.title">Skills</h2>
+        <p class="sub" data-i18n="skills.sub">Tools I've used on the job.</p>
+      </div>
+    </div>
+    <div class="grid sec-body">
+      <div class="card reveal">
+        <h3 data-i18n="skills.web">Web Development</h3>
+        <div class="chips"><span class="chip">PHP</span><span class="chip">Laravel</span><span class="chip">MySQL</span><span class="chip">REST APIs</span><span class="chip">Admin Dashboards</span></div>
+      </div>
+      <div class="card reveal">
+        <h3 data-i18n="skills.int">Integrations</h3>
+        <div class="chips"><span class="chip">Payment Gateway</span><span class="chip">SMS API</span><span class="chip">Email Automation</span></div>
+      </div>
+      <div class="card reveal">
+        <h3 data-i18n="skills.ai">AI Tools</h3>
+        <div class="chips"><span class="chip">Claude</span><span class="chip">ChatGPT</span><span class="chip">DeepSeek</span></div>
+      </div>
+      <div class="card reveal">
+        <h3 data-i18n="skills.auto">Automation &amp; Engineering</h3>
+        <div class="chips"><span class="chip">PLC Allen Bradley</span><span class="chip">Omron</span><span class="chip">Siemens PCS7</span><span class="chip">SCADA / HMI</span><span class="chip">Ladder &amp; FBD</span><span class="chip">NDT Inspection</span></div>
+      </div>
+      <div class="card reveal">
+        <h3 data-i18n="skills.eng">Engineering Tools</h3>
+        <div class="chips"><span class="chip">AutoCAD</span><span class="chip">Primavera P6</span><span class="chip">Process Simulation</span><span class="chip">MS Office</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certifications">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="cert.title">Certifications</h2>
+        <p class="sub" data-i18n="cert.sub">Courses and professional training.</p>
+      </div>
+    </div>
+    <div class="card sec-body reveal">
+      <ul data-i18n="cert.list">
+        <li><strong>Primavera Planning Tools &amp; Techniques (P6)</strong> · Qatar</li>
+        <li><strong>QA/QC (Welding &amp; Piping) Professional</strong> · BSS Skill Mission</li>
+        <li><strong>Process Simulation</strong> · SIM Info-systems</li>
+        <li><strong>Process Design &amp; Simulation</strong> · Petrofac</li>
+        <li><strong>NDT Level II</strong></li>
+        <li><strong>Diploma in Cartoon &amp; Animation</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="edu.title">Education</h2>
+        <p class="sub" data-i18n="edu.sub">Academic background.</p>
+      </div>
+    </div>
+    <div class="sec-body edu-list">
+      <div class="card edu reveal">
+        <div class="edu-mark">B.E</div>
+        <div>
+          <h3 data-i18n="edu.deg">B.E. Petrochemical Engineering</h3>
+          <p data-i18n="edu.type">SVS College of Engineering, Anna University · 2018</p>
+        </div>
+      </div>
+      <div class="card reveal">
+        <ul data-i18n="edu.school">
+          <li><strong>Higher Secondary (HSE)</strong> · Vidyaa Vikas Matriculation Higher Secondary School · 2014</li>
+          <li><strong>SSLC</strong> · Eden Gardens Matriculation Higher Secondary School · 2012</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3 data-i18n="edu.lang">Languages</h3>
+        <div class="chips"><span class="chip">English</span><span class="chip">தமிழ்</span><span class="chip">Hindi</span><span class="chip">Malayalam</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="reveal">
+      <span class="ornament">✦</span>
+      <h2 data-i18n="contact.title">Let's work together</h2>
+      <p class="sub" data-i18n="contact.sub">Open to web development roles and Laravel / MySQL projects.</p>
+      <div class="contact-links">
+        <a class="btn primary" href="mailto:rambaskarpc@gmail.com">rambaskarpc@gmail.com</a>
+        <a class="btn" href="resume.html" target="_blank" data-i18n="btn.resume2">Resume ↗</a>
+        <a class="btn" href="https://github.com/rambharath199727-stack" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/ram-bharath-864081219/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>© <span id="yr"></span> <span data-i18n="footer">RamBharath Baskar · Chennai</span></footer>
+
+<script>
+  // Tamil text for every [data-i18n] element. English comes from the HTML itself.
+  const TA = {
+    'nav.about': 'பற்றி',
+    'nav.exp': 'அனுபவம்',
+    'nav.projects': 'திட்டங்கள்',
+    'nav.skills': 'திறன்கள்',
+    'nav.contact': 'தொடர்பு',
+
+    'hero.kicker': 'Portfolio · சென்னை',
+    'hero.name': 'ராம்பரத் பாஸ்கர்',
+    'hero.role': 'மென்பொருள் / Web டெவலப்பர்',
+    'meta.loc': 'சென்னை, தமிழ்நாடு',
+    'meta.job': 'Trophysystems நிறுவனத்தில் Web Software Engineer',
+    'hero.lead': 'தமிழ்நாடு அரசு பல்கலைக்கழகங்கள் மற்றும் துறைகளுக்கான சேர்க்கை, கலந்தாய்வு portal-கள், admin dashboard-கள் மற்றும் API ஒருங்கிணைப்புகளை உருவாக்குகிறேன்.',
+    'btn.projects': 'திட்டங்களைப் பார்க்க',
+    'btn.email': 'மின்னஞ்சல் அனுப்ப',
+    'btn.resume': 'சுயவிவரம் ↗',
+    'btn.resume2': 'சுயவிவரம் ↗',
+
+    'about.title': 'என்னைப் பற்றி',
+    'about.sub': 'தொழிற்சாலையிலிருந்து இணைய உலகுக்கு வந்த ஒரு பொறியாளர்.',
+    'about.c1.h': 'பொறியியல் அடித்தளம்',
+    'about.c1.p': 'பெட்ரோகெமிக்கல் இன்ஜினியரிங்கில் B.E., பின்னர் வெல்டிங் இயந்திர சேவை, தொழில்துறை ஆட்டோமேஷனில் PLC, DCS புரோகிராமிங், அதன் பிறகு கத்தாரில் NDT ஆய்வுப் பணி.',
+    'about.c2.h': 'இன்று Web டெவலப்பர்',
+    'about.c2.p': '2025 முதல், மாணவர்களும் பல்கலைக்கழக அதிகாரிகளும் பயன்படுத்தும் அரசு சேர்க்கை மற்றும் கலந்தாய்வு portal-களை உருவாக்கி வருகிறேன்.',
+    'about.c3.h': 'AI உதவியுடன் வேலை',
+    'about.c3.p': 'Claude, ChatGPT, DeepSeek போன்ற AI கருவிகளைப் பயன்படுத்தி வேகமாக வேலை செய்கிறேன். வெளியிடுவதற்கு முன் அனைத்தையும் சரிபார்த்து test செய்கிறேன்.',
+
+    'exp.title': 'பணி அனுபவம்',
+    'exp.sub': 'மென்பொருள், ஆட்டோமேஷன், ஆய்வு, இயந்திர சேவைப் பணிகளில் சுமார் 6 ஆண்டு அனுபவம்.',
+    'job1.co': 'Trophysystems · முழு நேரம்',
+    'job1.when': 'ஏப் 2025 – தற்போது வரை<br>சென்னை, இந்தியா · Hybrid',
+    'job1.domain': 'மென்பொருள்',
+    'job1.list': '<li>தமிழ்நாடு அரசு பல்கலைக்கழகங்கள் மற்றும் துறைகளுக்கான சேர்க்கை, கலந்தாய்வு portal-களை உருவாக்குதல்</li><li>Admin dashboard-கள், அதிகாரிகளுக்கான scrutiny பணிமுறைகள், மாணவர்களுக்கான status dashboard-கள்</li><li>SMS, மின்னஞ்சல், payment gateway API ஒருங்கிணைப்புகள்</li><li>Claude, ChatGPT, DeepSeek உதவியுடன் மென்பொருள் உருவாக்கம்</li>',
+    'job2.co': 'Pemco Inspection Company · முழு நேரம்',
+    'job2.when': 'டிச 2023 – பிப் 2025<br>தோஹா, கத்தார் · நேரடிப் பணி',
+    'job2.domain': 'ஆய்வு (Inspection)',
+    'job2.list': '<li>பணியிடத்தில் non-destructive testing (NDT) மற்றும் ஆய்வுப் பணிகளைச் செய்தேன்</li><li>கடுமையான பாதுகாப்பு, தர நடைமுறைகளைப் பின்பற்றி, துல்லியமான அறிக்கைகளும் ஆவணங்களும் தயாரித்தேன்</li><li>2D/3D வரைபடங்கள் மற்றும் GD&amp;T அடிப்படையில் பணியாற்றினேன்</li><li>RFQ மற்றும் தொழில்நுட்பக் கேள்விகளுக்கு வாடிக்கையாளர்களுடன் பேசி, proposal-களை உரிய நேரத்தில் முடித்தேன்</li>',
+    'job3.co': 'Technocrat Automation Pvt. Limited · முழு நேரம்',
+    'job3.when': 'அக் 2021 – அக் 2022<br>சென்னை, இந்தியா · நேரடிப் பணி',
+    'job3.domain': 'தொழில்துறை ஆட்டோமேஷன்',
+    'job3.list': '<li>RO ஆலைக்கான Siemens PCS7 அடிப்படையிலான கட்டுப்பாட்டு அமைப்பை configuration முதல் செயல்படுத்துதல் வரை உருவாக்கினேன்</li><li>Ladder, FBD முறைகளில் PLC புரோகிராமிங் (Allen Bradley, Omron); தொழில் தரநிலைகளின்படி custom Function Block-களை உருவாக்கி test செய்தேன்</li><li>HMI, SCADA திரைகளை வடிவமைத்து PLC-யுடன் இணைத்தேன்</li><li>IO பட்டியல்கள், relay சுற்றுகள் தயாரித்து, வாடிக்கையாளர் இடத்தில் இயந்திரங்களை commission செய்தேன்</li><li>Ethernet, DeviceNet தொடர்புப் பிழைகளையும், பழைய புரோகிராம்களின் கோளாறுகளையும் சரிசெய்தேன்</li>',
+    'job4.when': 'ஜூலை 2019 – ஜூன் 2021<br>சென்னை, இந்தியா',
+    'job4.domain': 'இயந்திர சேவை',
+    'job4.list': '<li>வெல்டிங் இயந்திரங்களை நிறுவி, weld strength சோதனை உட்பட அவற்றின் செயல்முறையை விளக்கினேன்</li><li>Plasma welding, gas welding consumables உடன் பணியாற்றினேன்</li>',
+
+    'proj.title': 'திட்டங்கள்',
+    'proj.sub': 'Trophysystems-இல் செய்த மென்பொருள் பணிகளும், முந்தைய ஆட்டோமேஷன் திட்டங்களும்.',
+    'p1.eyebrow': '2026–27 · அரசு',
+    'p1.title': 'TNJFU &amp; TANUVAS சேர்க்கை மற்றும் கலந்தாய்வு Portal-கள்',
+    'p1.desc': 'இரண்டு தமிழ்நாடு மாநிலப் பல்கலைக்கழகங்களுக்கான முழுமையான சேர்க்கை, கலந்தாய்வு அமைப்புகள்: விண்ணப்பம் முதல் இட ஒதுக்கீடு வரை.',
+    'p1.list': '<li>விண்ணப்பங்களையும் கலந்தாய்வு செயல்முறையையும் நிர்வகிக்க <strong>Admin dashboard</strong></li><li>அதிகாரிகள் விண்ணப்பங்களைச் சரிபார்க்க <strong>Scrutiny window</strong></li><li>மாணவர்கள் தங்கள் கலந்தாய்வு நிலையை அறிய <strong>Candidate dashboard</strong></li><li><strong>SMS, மின்னஞ்சல், payment gateway</strong> API ஒருங்கிணைப்பு</li><li>விண்ணப்பதாரர்களுக்கு <strong>தானியங்கி மின்னஞ்சல் நினைவூட்டல்கள்</strong></li><li>சேர்க்கை இணையப் பக்கங்களைப் புதுப்பித்தல்</li>',
+    'p2.eyebrow': 'அரசு',
+    'p2.tag': 'நடைபெறுகிறது',
+    'p2.desc': 'தமிழ்நாடு டாக்டர் ஜெ. ஜெயலலிதா மீன்வளப் பல்கலைக்கழகத்தின் முதுநிலைப் படிப்புகளுக்கான சேர்க்கை portal.',
+    'p3.eyebrow': 'இணையதளம் + Dashboard',
+    'p3.desc': 'பொது இணையதளத்தை மேம்படுத்தி, அதன் உள்ளடக்கத்தையும் தரவுகளையும் நிர்வகிக்க admin dashboard உருவாக்கினேன்.',
+    'p4.eyebrow': 'ஆட்டோமேஷன் · Technocrat',
+    'p4.desc': 'Reverse osmosis (RO) ஆலைக்கான Siemens PCS7 அடிப்படையிலான கட்டுப்பாட்டு அமைப்பு: configuration முதல் செயல்படுத்துதல் வரை.',
+    'p5.eyebrow': 'ஆட்டோமேஷன் · Tube Products of India',
+    'p5.desc': '80 டன், 20 டன் draw bench இயந்திரங்களுக்கான PLC கட்டுப்பாட்டு அமைப்பு.',
+
+    'skills.title': 'திறன்கள்',
+    'skills.sub': 'பணியில் பயன்படுத்திய கருவிகள்.',
+    'skills.web': 'Web உருவாக்கம்',
+    'skills.int': 'ஒருங்கிணைப்புகள்',
+    'skills.ai': 'AI கருவிகள்',
+    'skills.auto': 'ஆட்டோமேஷன் &amp; பொறியியல்',
+    'skills.eng': 'பொறியியல் கருவிகள்',
+
+    'cert.title': 'சான்றிதழ்கள்',
+    'cert.sub': 'பயிற்சிகள் மற்றும் தொழில்முறைச் சான்றிதழ்கள்.',
+    'cert.list': '<li><strong>Primavera Planning Tools &amp; Techniques (P6)</strong> · கத்தார்</li><li><strong>QA/QC (Welding &amp; Piping) Professional</strong> · BSS Skill Mission</li><li><strong>Process Simulation</strong> · SIM Info-systems</li><li><strong>Process Design &amp; Simulation</strong> · Petrofac</li><li><strong>NDT Level II</strong></li><li><strong>கார்ட்டூன் &amp; அனிமேஷன் டிப்ளோமா</strong></li>',
+
+    'edu.title': 'கல்வி',
+    'edu.sub': 'கல்விப் பின்னணி.',
+    'edu.deg': 'B.E. பெட்ரோகெமிக்கல் இன்ஜினியரிங்',
+    'edu.type': 'SVS பொறியியல் கல்லூரி, அண்ணா பல்கலைக்கழகம் · 2018',
+    'edu.school': '<li><strong>மேல்நிலைக் கல்வி (HSE)</strong> · வித்யா விகாஸ் மெட்ரிகுலேஷன் மேல்நிலைப் பள்ளி · 2014</li><li><strong>SSLC</strong> · ஈடன் கார்டன்ஸ் மெட்ரிகுலேஷன் மேல்நிலைப் பள்ளி · 2012</li>',
+    'edu.lang': 'மொழிகள்',
+
+    'contact.title': 'சேர்ந்து வேலை செய்வோம்',
+    'contact.sub': 'Web டெவலப்மென்ட் பணிகள் மற்றும் Laravel / MySQL திட்டங்களுக்குத் தயார். தொடர்பு கொள்ள தயங்க வேண்டாம்!',
+    'footer': 'ராம்பரத் பாஸ்கர் · சென்னை',
+  };
+
+  const root = document.documentElement;
+  const nodes = [...document.querySelectorAll('[data-i18n]')];
+  const EN = new Map(nodes.map(el => [el, el.innerHTML]));
+  const langBtn = document.getElementById('langBtn');
+
+  // Wrap each letter of the big headings in a span so they can animate one by one.
+  // Graphemes keep Tamil letters (consonant + vowel sign) together.
+  const graphemes = 'Segmenter' in Intl ? new Intl.Segmenter(undefined, { granularity: 'grapheme' }) : null;
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  function splitHeadings() {
+    document.querySelectorAll('h1, .sec-head h2, .contact h2').forEach(el => {
+      const text = el.textContent.trim();
+      let i = 0;
+      el.setAttribute('aria-label', text);
+      el.innerHTML = text.split(/\s+/).map(word => {
+        const chars = graphemes ? [...graphemes.segment(word)].map(s => s.segment)
+                    : root.lang === 'ta' ? [word] : [...word];
+        return '<span class="word" aria-hidden="true">'
+          + chars.map(c => `<span class="char" style="--i:${i++}">${esc(c)}</span>`).join('')
+          + '</span>';
+      }).join(' ');
+      el.classList.add('split');
+    });
+  }
+
+  function setLang(lang) {
+    root.lang = lang;
+    nodes.forEach(el => {
+      el.innerHTML = lang === 'ta' && TA[el.dataset.i18n] ? TA[el.dataset.i18n] : EN.get(el);
+    });
+    splitHeadings();
+    langBtn.textContent = lang === 'ta' ? 'English' : 'தமிழ்';
+    langBtn.setAttribute('aria-label', lang === 'ta' ? 'Switch to English' : 'தமிழுக்கு மாற்று');
+    document.title = (lang === 'ta' ? 'ராம்பரத் பாஸ்கர்' : 'RamBharath Baskar') + ' · Portfolio';
+    try { localStorage.setItem('lang', lang); } catch (e) {}
+  }
+  langBtn.addEventListener('click', () => setLang(root.lang === 'ta' ? 'en' : 'ta'));
+  let savedLang = 'en';
+  try { savedLang = localStorage.getItem('lang') || 'en'; } catch (e) {}
+  if (savedLang === 'ta') setLang('ta'); else splitHeadings();
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById('themeBtn').addEventListener('click', () => {
+    const dark = root.dataset.theme
+      ? root.dataset.theme === 'dark'
+      : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+  });
+
+  // Hairline under the nav and gold progress line as the page scrolls
+  const nav = document.getElementById('nav');
+  const progress = document.getElementById('progress');
+  function onScroll() {
+    nav.classList.toggle('scrolled', scrollY > 8);
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // In-page links scroll with JS, so they also work where the browser blocks #hash navigation
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = document.getElementById(link.getAttribute('href').slice(1));
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      try { history.replaceState(null, '', link.getAttribute('href')); } catch (err) {}
+    });
+  });
+
+  // Underline the nav link of the section currently on screen
+  const navLinks = [...document.querySelectorAll('.links a[href^="#"]')];
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    document.querySelectorAll('main > section').forEach(s => spy.observe(s));
+  }
+
+  // Cards in the same row arrive one after another
+  document.querySelectorAll('.grid, .projects, .timeline').forEach(group => {
+    [...group.children].forEach((child, i) => child.style.setProperty('--d', `${i * 120}ms`));
+  });
+
+  // Fade sections in as they enter the viewport; afterwards hand back the quick hover transitions
+  const reveals = document.querySelectorAll('.reveal');
+  const show = el => {
+    el.classList.add('in');
+    setTimeout(() => el.classList.add('done'), 1600 + (parseInt(el.style.getPropertyValue('--d')) || 0));
+  };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(show);
+  }
+</script>
+</body>
+</html>
