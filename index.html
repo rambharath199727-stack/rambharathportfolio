@@ -357,6 +357,38 @@
     .cursor { display: none; }
   }
 
+  /* Fifth KPI tile: live website views */
+  @media (min-width: 720px) { .stats { grid-template-columns: repeat(5, 1fr); } }
+  @media (max-width: 719px) { .stat-views { grid-column: 1 / -1; } }
+  .stat-views b { color: var(--gold); }
+
+  /* Suggestion box */
+  .suggest { display: grid; gap: 16px; }
+  .suggest label { display: grid; gap: 6px; font-size: 13px; font-weight: 500; color: var(--muted); }
+  .suggest input, .suggest select, .suggest textarea {
+    width: 100%; padding: 11px 14px; border: 1px solid var(--border); border-radius: 12px;
+    background: var(--bg); color: var(--text); font: 15px/1.5 "Inter", "Noto Sans Tamil", sans-serif;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .suggest input:focus, .suggest select:focus, .suggest textarea:focus {
+    outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft);
+  }
+  .suggest textarea { resize: vertical; min-height: 110px; }
+  .suggest .row { display: grid; gap: 16px; }
+  @media (min-width: 720px) { .suggest .row { grid-template-columns: 1fr 1fr; } }
+  .suggest button { justify-self: start; cursor: pointer; font-family: inherit; }
+  .suggest button:disabled { opacity: .6; cursor: wait; }
+  .suggest .honey { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .suggest-status { margin: 0; min-height: 1.4em; font-size: 14px; }
+  .suggest-status.ok { color: #3f7d4f; }
+  .suggest-status.err { color: #b42318; }
+  :root[data-theme="dark"] .suggest-status.ok { color: #86c69a; }
+  :root[data-theme="dark"] .suggest-status.err { color: #f8a5a0; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .suggest-status.ok { color: #86c69a; }
+    :root:not([data-theme="light"]) .suggest-status.err { color: #f8a5a0; }
+  }
+
   /* "Show details" toggle on folded job cards (phones only) */
   .job-toggle { display: none; }
 
@@ -571,6 +603,7 @@
     <div class="stat reveal"><b><span class="count" data-to="5">5</span></b><span data-i18n="stat.roles">Roles</span></div>
     <div class="stat reveal"><b><span class="count" data-to="2">2</span></b><span data-i18n="stat.countries">Countries</span></div>
     <div class="stat reveal"><b><span class="count" data-to="4">4</span></b><span data-i18n="stat.langs">Languages</span></div>
+    <div class="stat stat-views reveal"><b><span class="count" id="viewCount">—</span></b><span data-i18n="stat.views">Website views</span></div>
   </div>
 
   <div class="marquee" aria-hidden="true">
@@ -846,6 +879,36 @@
     </div>
   </section>
 
+  <section id="suggest">
+    <div class="sec-head reveal">
+      <div>
+        <h2 data-i18n="sug.title">Suggestion box</h2>
+        <p class="sub" data-i18n="sug.sub">Drop an idea to help me improve, or suggest a change to this site.</p>
+      </div>
+    </div>
+    <form class="card suggest sec-body reveal" id="suggestForm" action="https://formsubmit.co/rambharath199727@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="New suggestion from your portfolio">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label><span data-i18n="sug.type">What is it about?</span>
+        <select name="type">
+          <option value="Idea to improve myself" data-i18n="sug.opt1">Idea to improve myself</option>
+          <option value="Change to this website" data-i18n="sug.opt2">Change to this website</option>
+          <option value="Other" data-i18n="sug.opt3">Other</option>
+        </select>
+      </label>
+      <label><span data-i18n="sug.msg">Your suggestion</span>
+        <textarea name="message" rows="4" maxlength="2000" required></textarea>
+      </label>
+      <div class="row">
+        <label><span data-i18n="sug.name">Name (optional)</span><input type="text" name="name" maxlength="80" autocomplete="name"></label>
+        <label><span data-i18n="sug.email">Email (optional, for a reply)</span><input type="email" name="email" maxlength="120" autocomplete="email"></label>
+      </div>
+      <button class="btn primary" type="submit" data-i18n="sug.send">Send suggestion</button>
+      <p class="suggest-status" id="suggestStatus" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
   <section id="contact" class="contact">
     <div class="reveal">
       <svg class="kolam" viewBox="0 0 120 60" aria-hidden="true">
@@ -895,6 +958,17 @@
     'stat.roles': 'பணிப் பொறுப்புகள்',
     'stat.countries': 'நாடுகள்',
     'stat.langs': 'மொழிகள்',
+    'stat.views': 'இணையதளப் பார்வைகள்',
+    'sug.title': 'யோசனைப் பெட்டி',
+    'sug.sub': 'என்னை மேம்படுத்த ஒரு யோசனை அல்லது இந்த இணையதளத்தில் ஒரு மாற்றத்தைப் பரிந்துரைக்கவும்.',
+    'sug.type': 'எதைப் பற்றியது?',
+    'sug.opt1': 'என்னை மேம்படுத்த யோசனை',
+    'sug.opt2': 'இணையதளத்தில் மாற்றம்',
+    'sug.opt3': 'மற்றவை',
+    'sug.msg': 'உங்கள் பரிந்துரை',
+    'sug.name': 'பெயர் (விருப்பம்)',
+    'sug.email': 'மின்னஞ்சல் (பதில் வேண்டுமெனில்)',
+    'sug.send': 'பரிந்துரையை அனுப்பு',
     'meta.loc': 'சென்னை, தமிழ்நாடு',
     'meta.job': 'Trophysystems நிறுவனத்தில் Web Software Engineer',
     'hero.lead': 'தமிழ்நாடு அரசு பல்கலைக்கழகங்கள் மற்றும் துறைகளுக்கான சேர்க்கை, கலந்தாய்வு portal-கள், admin dashboard-கள் மற்றும் API ஒருங்கிணைப்புகளை உருவாக்குகிறேன்.',
@@ -1095,14 +1169,15 @@
   const reveals = document.querySelectorAll('.reveal');
   // Numbers count up from zero when they scroll into view
   const counts = document.querySelectorAll('.count');
-  counts.forEach(c => { if (!reduceMotion) c.textContent = '0'; });
+  counts.forEach(c => { if (!reduceMotion && c.dataset.to) c.textContent = '0'; });
   function countUp(el) {
+    if (!el.dataset.to) return;
     const to = +el.dataset.to;
     if (reduceMotion) { el.textContent = to; return; }
     const start = performance.now(), dur = 1600;
     const step = now => {
       const p = Math.min((now - start) / dur, 1);
-      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))).toLocaleString('en-IN');
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -1120,6 +1195,69 @@
     reveals.forEach(el => io.observe(el));
   } else {
     reveals.forEach(show);
+  }
+
+  // Website views: counted once per browser session by the free Abacus counter.
+  // Local copies use a separate "dev" key so testing never inflates the real number.
+  const viewEl = document.getElementById('viewCount');
+  if (viewEl) {
+    const key = location.hostname.endsWith('github.io') ? 'views' : 'views-dev';
+    let seen = false;
+    try { seen = sessionStorage.getItem('rb-viewed') === '1'; } catch (e) {}
+    fetch(`https://abacus.jasoncameron.dev/${seen ? 'get' : 'hit'}/rambharath199727-portfolio/${key}`)
+      .then(r => (r.ok ? r.json() : null))
+      .then(data => {
+        if (!data || typeof data.value !== 'number') return;
+        try { sessionStorage.setItem('rb-viewed', '1'); } catch (e) {}
+        viewEl.dataset.to = data.value;
+        if (viewEl.closest('.reveal')?.classList.contains('in')) countUp(viewEl);
+        else viewEl.textContent = reduceMotion ? data.value.toLocaleString('en-IN') : '0';
+      })
+      .catch(() => {});
+  }
+
+  // Suggestion box: sends through FormSubmit's AJAX endpoint and shows the result in place
+  const SUG_MSG = {
+    en: {
+      sending: 'Sending…',
+      ok: 'Thank you! Your suggestion has been sent.',
+      err: 'Sorry, it could not be sent right now. Please try again later, or use the email button below.',
+    },
+    ta: {
+      sending: 'அனுப்புகிறது…',
+      ok: 'நன்றி! உங்கள் பரிந்துரை அனுப்பப்பட்டது.',
+      err: 'மன்னிக்கவும், இப்போது அனுப்ப முடியவில்லை. பின்னர் முயற்சிக்கவும் அல்லது கீழே உள்ள மின்னஞ்சல் பொத்தானைப் பயன்படுத்தவும்.',
+    },
+  };
+  const form = document.getElementById('suggestForm');
+  if (form) {
+    const status = document.getElementById('suggestStatus');
+    const msg = k => SUG_MSG[root.lang === 'ta' ? 'ta' : 'en'][k];
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (form._honey.value) return;
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      status.className = 'suggest-status';
+      status.textContent = msg('sending');
+      try {
+        const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || String(data.success) !== 'true') throw new Error(data.message || res.status);
+        status.className = 'suggest-status ok';
+        status.textContent = msg('ok');
+        form.reset();
+      } catch (err) {
+        status.className = 'suggest-status err';
+        status.textContent = msg('err');
+      } finally {
+        btn.disabled = false;
+      }
+    });
   }
 
   // Ribbon: repeat the words once so the loop is seamless
@@ -1201,7 +1339,7 @@
   });
 
   // Cards: gold glow follows the pointer, and a gentle 3D tilt for mouse users
-  document.querySelectorAll('.card').forEach(card => {
+  document.querySelectorAll('.card:not(.suggest)').forEach(card => {
     card.addEventListener('pointermove', e => {
       const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
       card.style.setProperty('--mx', x + 'px');
