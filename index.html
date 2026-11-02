@@ -357,6 +357,75 @@
     .cursor { display: none; }
   }
 
+  /* "Show details" toggle on folded job cards (phones only) */
+  .job-toggle { display: none; }
+
+  /* Phones: dashboard-style compact layout, so the page isn't one long scroll */
+  @media (max-width: 719px) {
+    header { padding: 40px 0 36px; gap: 0; }
+    h1 { margin: 14px 0 8px; }
+    .role { margin-bottom: 18px; }
+    .rotate-line { margin: -8px 0 16px; }
+    .meta { margin-bottom: 16px; font-size: 13px; }
+    .lead { font-size: 15.5px; }
+    .cta { margin-top: 22px; gap: 8px; }
+    .btn { padding: 10px 16px; font-size: 14px; }
+    .socials { margin-top: 18px; }
+
+    .stat { padding: 18px 8px 16px; }
+    .stat b { font-size: 40px; }
+    .stat > span { margin-top: 4px; font-size: 10.5px; }
+    .marquee { padding: 16px 0; }
+    .marquee span { font-size: 24px; padding: 0 16px; }
+
+    section { padding: 44px 0; }
+    .sec-head { margin-bottom: 20px; }
+    h2 { font-size: 34px; }
+    .sec-head h2::after { margin-top: 10px; }
+    .sub { font-size: 14px; margin-top: 4px; }
+
+    /* Card rows become swipeable strips; the next card peeks in to show there's more */
+    .grid, .projects, .edu-list {
+      display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+      margin: 0 -16px; padding: 4px 16px 14px; scrollbar-width: none;
+    }
+    .grid::-webkit-scrollbar, .projects::-webkit-scrollbar, .edu-list::-webkit-scrollbar { display: none; }
+    .grid > .card, .projects > .card, .edu-list > .card { flex: 0 0 84%; scroll-snap-align: start; }
+    .projects .card.wide { padding: 22px; }
+    .card { padding: 20px; border-radius: 16px; }
+    .card h3 { font-size: 21px; }
+    .num { font-size: 32px; margin-bottom: 10px; }
+    .card ul { font-size: 14px; }
+    .chips { margin-top: 14px; gap: 6px; }
+    .chip { font-size: 10.5px; padding: 4px 10px; }
+
+    /* Experience: each job folds to title, company and dates */
+    .timeline { padding-left: 22px; }
+    .timeline::before { left: 4px; }
+    .job { margin-bottom: 12px; }
+    .job::before { left: -24px; top: 24px; width: 11px; height: 11px; }
+    .job-domain { margin-top: 8px; }
+    .foldable:not(.open) ul, .foldable:not(.open) .chips { display: none; }
+    .job-toggle {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 0;
+      border: 0; background: none; color: var(--gold); cursor: pointer;
+      font: 500 13px "Inter", "Noto Sans Tamil", sans-serif;
+    }
+    .job-toggle::before { content: "Show details"; }
+    .job-toggle::after { content: "+"; font-size: 16px; line-height: 1; transition: transform .25s; }
+    .foldable.open .job-toggle::before { content: "Hide details"; }
+    .foldable.open .job-toggle::after { transform: rotate(45deg); }
+    html[lang="ta"] .job-toggle::before { content: "விவரங்கள் காண"; }
+    html[lang="ta"] .foldable.open .job-toggle::before { content: "மறை"; }
+    #certifications .card ul { font-size: 13.5px; }
+    #certifications .card li { margin-bottom: 4px; }
+
+    .contact { padding: 56px 0; }
+    .contact-links { margin-top: 24px; gap: 8px; }
+    .signature { margin-top: 28px; }
+    .kolam { width: 104px; height: 52px; margin-bottom: 14px; }
+  }
+
   /* Scroll progress hairline */
   .progress {
     position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20; pointer-events: none;
@@ -1119,6 +1188,17 @@
       }).observe(canvas);
     }
   }
+
+  // Job cards and the big project card get a "Show details" toggle; CSS only folds them on phones
+  document.querySelectorAll('.job, .projects .card.wide').forEach(card => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'job-toggle';
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', () => btn.setAttribute('aria-expanded', card.classList.toggle('open')));
+    card.classList.add('foldable');
+    (card.querySelector('.job-domain') || card.querySelector('p')).after(btn);
+  });
 
   // Cards: gold glow follows the pointer, and a gentle 3D tilt for mouse users
   document.querySelectorAll('.card').forEach(card => {
