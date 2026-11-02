@@ -58,6 +58,7 @@
     color: var(--text);
     font: 16px/1.75 "Inter", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
   .serif, h1, h2, h3, .role { font-family: "Cormorant Garamond", Georgia, serif; font-optical-sizing: auto; }
   html[lang="ta"] body { font-family: "Noto Sans Tamil", "Inter", system-ui, sans-serif; }
@@ -103,7 +104,7 @@
   @media (max-width: 420px) { .links a.hide-xs { display: none; } .links { gap: 10px; } }
 
   /* Hero */
-  header { padding: 96px 0 88px; display: grid; gap: 48px; align-items: center; }
+  header { padding: 96px 0 88px; display: grid; gap: 48px; align-items: center; position: relative; isolation: isolate; }
   @media (min-width: 820px) { header { grid-template-columns: 1fr auto; padding: 128px 0 112px; } }
   .kicker {
     display: inline-flex; align-items: center; gap: 12px;
@@ -251,6 +252,111 @@
     text-align: center; letter-spacing: .04em;
   }
 
+  /* Paper grain over the whole page */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Gold constellation drifting behind the hero */
+  #dust {
+    position: absolute; top: -64px; bottom: 0; left: 50%; width: 100vw; height: calc(100% + 64px);
+    transform: translateX(-50%); z-index: -1; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+    mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  }
+
+  /* Typewriter line under the role */
+  .rotate-line {
+    font: italic 500 clamp(20px, 2.6vw, 26px)/1.3 "Cormorant Garamond", Georgia, serif;
+    margin: -14px 0 26px; min-height: 1.3em;
+  }
+  html[lang="ta"] .rotate-line { font: 400 17px/1.5 "Noto Serif Tamil", Georgia, serif; }
+  .rotator { color: var(--gold); }
+  .caret {
+    display: inline-block; width: 1px; height: 1em; margin-left: 3px; vertical-align: -.12em;
+    background: var(--gold); animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Numbers strip */
+  .stats {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+    background: var(--border); border-block: 1px solid var(--border);
+  }
+  @media (min-width: 720px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+  .stat { background: var(--bg); padding: 30px 10px 26px; text-align: center; }
+  .stat b { display: block; font: 500 clamp(46px, 6vw, 66px)/1 "Cormorant Garamond", Georgia, serif; }
+  .stat b sup { font-size: .45em; color: var(--gold); margin-left: 2px; }
+  .stat > span {
+    display: block; margin-top: 8px; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+  }
+  html[lang="ta"] .stat > span { letter-spacing: .02em; font-size: 13px; }
+
+  /* Endless ribbon of skills */
+  .marquee {
+    position: relative; left: 50%; width: 100vw; transform: translateX(-50%); overflow: hidden; padding: 30px 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+  .marquee .track { display: flex; align-items: center; width: max-content; animation: marquee 45s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .marquee span {
+    font: italic 500 clamp(28px, 3.8vw, 44px)/1.1 "Cormorant Garamond", Georgia, serif;
+    color: var(--text); padding: 0 24px; white-space: nowrap;
+  }
+  .marquee span.outline { color: transparent; -webkit-text-stroke: 1px var(--gold); }
+  .marquee span.star { color: var(--gold); font: 400 16px/1 "Inter", sans-serif; padding: 0; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* Kolam: a Tamil dot-and-loop motif that draws itself */
+  .kolam { display: block; width: 132px; height: 66px; margin: 0 auto 22px; color: var(--gold); overflow: visible; }
+  .kolam path { fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; }
+  .kolam circle { fill: currentColor; }
+  .js .kolam path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s cubic-bezier(.4, 0, .2, 1) .2s; }
+  .js .in .kolam path { stroke-dashoffset: 0; }
+  .js .kolam circle { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0); transition: opacity .5s, transform .5s; }
+  .js .in .kolam circle { opacity: 1; transform: none; }
+  .js .in .kolam circle:nth-of-type(2) { transition-delay: .1s; }
+  .js .in .kolam circle:nth-of-type(3) { transition-delay: .2s; }
+  .js .in .kolam circle:nth-of-type(4) { transition-delay: .3s; }
+  .js .in .kolam circle:nth-of-type(5) { transition-delay: .4s; }
+  footer .kolam { width: 84px; height: 42px; margin-bottom: 14px; opacity: .8; }
+
+  /* Signature written in gold ink */
+  .signature { display: block; width: min(420px, 80%); margin: 48px auto 0; overflow: visible; }
+  .signature text { font: italic 500 96px "Cormorant Garamond", Georgia, serif; fill: var(--gold); }
+  .js .signature text { fill: transparent; stroke: var(--gold); stroke-width: .8; stroke-dasharray: 900; stroke-dashoffset: 900; }
+  .js .in .signature text { animation: sign 4s ease .5s forwards; }
+  @keyframes sign {
+    70% { stroke-dashoffset: 0; fill: transparent; }
+    100% { stroke-dashoffset: 0; fill: var(--gold); stroke-width: 0; }
+  }
+
+  /* Gold glow that follows the pointer across cards */
+  .card {
+    background-image: radial-gradient(420px circle at var(--mx, -600px) var(--my, -600px),
+      color-mix(in srgb, var(--gold) 10%, transparent), transparent 45%);
+  }
+
+  /* Soft ring that trails the mouse (mouse users only) */
+  .cursor {
+    position: fixed; top: 0; left: 0; z-index: 200; pointer-events: none;
+    width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%;
+    border: 1px solid var(--gold); opacity: 0;
+    transition: width .25s, height .25s, margin .25s, background-color .25s, opacity .3s;
+  }
+  .cursor.on { opacity: .7; }
+  .cursor.big { width: 62px; height: 62px; margin: -31px 0 0 -31px; background-color: color-mix(in srgb, var(--gold) 12%, transparent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee .track, .caret { animation: none; }
+    .js .kolam path { stroke-dashoffset: 0; transition: none; }
+    .js .kolam circle { opacity: 1; transform: none; transition: none; }
+    .js .signature text { fill: var(--gold); stroke-width: 0; animation: none; }
+    .cursor { display: none; }
+  }
+
   /* Scroll progress hairline */
   .progress {
     position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 20; pointer-events: none;
@@ -293,6 +399,7 @@
   }
   .js .hero-seq.in > :not(h1):not(.kicker) { opacity: 1; transform: none; }
   .js .hero-seq.in > .role { transition-delay: .9s; }
+  .js .hero-seq.in > .rotate-line { transition-delay: 1s; }
   .js .hero-seq.in > .meta { transition-delay: 1.05s; }
   .js .hero-seq.in > .lead { transition-delay: 1.2s; }
   .js .hero-seq.in > .cta { transition-delay: 1.35s; }
@@ -353,10 +460,12 @@
 
 <main class="wrap" id="top">
   <header>
+    <canvas id="dust" aria-hidden="true"></canvas>
     <div class="reveal hero-seq">
       <div class="kicker" data-i18n="hero.kicker">Portfolio · Chennai</div>
       <h1 data-i18n="hero.name">RamBharath Baskar</h1>
       <p class="role" data-i18n="hero.role">Software / Web Developer</p>
+      <p class="rotate-line" aria-hidden="true"><span data-i18n="rot.pre">I build</span> <span class="rotator" id="rotator"></span><span class="caret"></span></p>
       <div class="meta">
         <span data-i18n="meta.job">Web Software Engineer at Trophysystems</span>
         <span data-i18n="meta.loc">Chennai, Tamil Nadu</span>
@@ -388,6 +497,28 @@
     </div>
   </header>
 
+  <div class="stats">
+    <div class="stat reveal"><b><span class="count" data-to="5">5</span><sup>+</sup></b><span data-i18n="stat.years">Years of experience</span></div>
+    <div class="stat reveal"><b><span class="count" data-to="5">5</span></b><span data-i18n="stat.roles">Roles</span></div>
+    <div class="stat reveal"><b><span class="count" data-to="2">2</span></b><span data-i18n="stat.countries">Countries</span></div>
+    <div class="stat reveal"><b><span class="count" data-to="4">4</span></b><span data-i18n="stat.langs">Languages</span></div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Laravel</span><span class="star">✦</span>
+      <span class="outline">MySQL</span><span class="star">✦</span>
+      <span>PHP</span><span class="star">✦</span>
+      <span class="outline">REST APIs</span><span class="star">✦</span>
+      <span>Payment Gateways</span><span class="star">✦</span>
+      <span class="outline">Admin Dashboards</span><span class="star">✦</span>
+      <span>PLC &amp; SCADA</span><span class="star">✦</span>
+      <span class="outline">P&amp;ID</span><span class="star">✦</span>
+      <span>AutoCAD</span><span class="star">✦</span>
+      <span class="outline">AI-assisted</span><span class="star">✦</span>
+    </div>
+  </div>
+
   <section id="about">
     <div class="sec-head reveal">
       <div>
@@ -418,7 +549,7 @@
     <div class="sec-head reveal">
       <div>
         <h2 data-i18n="exp.title">Experience</h2>
-        <p class="sub" data-i18n="exp.sub">About 6 years across software, automation, inspection and machinery service.</p>
+        <p class="sub" data-i18n="exp.sub">Over 5 years across software, process engineering, automation, inspection and machinery service.</p>
       </div>
     </div>
 
@@ -648,7 +779,11 @@
 
   <section id="contact" class="contact">
     <div class="reveal">
-      <span class="ornament">✦</span>
+      <svg class="kolam" viewBox="0 0 120 60" aria-hidden="true">
+        <path pathLength="1" d="M10,30 C10,8 30,8 30,30 C30,52 50,52 50,30 C50,8 70,8 70,30 C70,52 90,52 90,30 C90,8 110,8 110,30"/>
+        <path pathLength="1" d="M10,30 C10,52 30,52 30,30 C30,8 50,8 50,30 C50,52 70,52 70,30 C70,8 90,8 90,30 C90,52 110,52 110,30"/>
+        <circle cx="20" cy="30" r="2.2"/><circle cx="40" cy="30" r="2.2"/><circle cx="60" cy="30" r="2.2"/><circle cx="80" cy="30" r="2.2"/><circle cx="100" cy="30" r="2.2"/>
+      </svg>
       <h2 data-i18n="contact.title">Let's work together</h2>
       <p class="sub" data-i18n="contact.sub">Open to web development roles and Laravel / MySQL projects.</p>
       <div class="contact-links">
@@ -657,11 +792,22 @@
         <a class="btn" href="https://github.com/rambharath199727-stack" target="_blank" rel="noopener">GitHub ↗</a>
         <a class="btn" href="https://www.linkedin.com/in/ram-bharath-864081219/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
+      <svg class="signature" viewBox="0 0 520 130" role="img" aria-label="RamBharath">
+        <text x="260" y="98" text-anchor="middle">RamBharath</text>
+      </svg>
     </div>
   </section>
 </main>
 
-<footer>© <span id="yr"></span> <span data-i18n="footer">RamBharath Baskar · Chennai</span></footer>
+<footer>
+  <div class="reveal">
+    <svg class="kolam" viewBox="0 0 120 60" aria-hidden="true">
+      <path pathLength="1" d="M10,30 C10,8 30,8 30,30 C30,52 50,52 50,30 C50,8 70,8 70,30 C70,52 90,52 90,30 C90,8 110,8 110,30"/>
+      <path pathLength="1" d="M10,30 C10,52 30,52 30,30 C30,8 50,8 50,30 C50,52 70,52 70,30 C70,8 90,8 90,30 C90,52 110,52 110,30"/>
+      <circle cx="20" cy="30" r="2.2"/><circle cx="40" cy="30" r="2.2"/><circle cx="60" cy="30" r="2.2"/><circle cx="80" cy="30" r="2.2"/><circle cx="100" cy="30" r="2.2"/>
+    </svg>
+  </div>
+  © <span id="yr"></span> <span data-i18n="footer">RamBharath Baskar · Chennai</span></footer>
 
 <script>
   // Tamil text for every [data-i18n] element. English comes from the HTML itself.
@@ -675,6 +821,11 @@
     'hero.kicker': 'Portfolio · சென்னை',
     'hero.name': 'ராம்பரத் பாஸ்கர்',
     'hero.role': 'மென்பொருள் / Web டெவலப்பர்',
+    'rot.pre': 'நான் உருவாக்குவது —',
+    'stat.years': 'ஆண்டு அனுபவம்',
+    'stat.roles': 'பணிப் பொறுப்புகள்',
+    'stat.countries': 'நாடுகள்',
+    'stat.langs': 'மொழிகள்',
     'meta.loc': 'சென்னை, தமிழ்நாடு',
     'meta.job': 'Trophysystems நிறுவனத்தில் Web Software Engineer',
     'hero.lead': 'தமிழ்நாடு அரசு பல்கலைக்கழகங்கள் மற்றும் துறைகளுக்கான சேர்க்கை, கலந்தாய்வு portal-கள், admin dashboard-கள் மற்றும் API ஒருங்கிணைப்புகளை உருவாக்குகிறேன்.',
@@ -693,7 +844,7 @@
     'about.c3.p': 'Claude, ChatGPT, DeepSeek போன்ற AI கருவிகளைப் பயன்படுத்தி வேகமாக வேலை செய்கிறேன். வெளியிடுவதற்கு முன் அனைத்தையும் சரிபார்த்து test செய்கிறேன்.',
 
     'exp.title': 'பணி அனுபவம்',
-    'exp.sub': 'மென்பொருள், ஆட்டோமேஷன், ஆய்வு, இயந்திர சேவைப் பணிகளில் சுமார் 6 ஆண்டு அனுபவம்.',
+    'exp.sub': 'மென்பொருள், process பொறியியல், ஆட்டோமேஷன், ஆய்வு, இயந்திர சேவைப் பணிகளில் 5 ஆண்டுகளுக்கும் மேலான அனுபவம்.',
     'job1.co': 'Trophysystems · முழு நேரம்',
     'job1.when': 'அக் 2025 – தற்போது வரை<br>சென்னை, இந்தியா · Hybrid',
     'job1.domain': 'மென்பொருள்',
@@ -784,15 +935,43 @@
       el.innerHTML = lang === 'ta' && TA[el.dataset.i18n] ? TA[el.dataset.i18n] : EN.get(el);
     });
     splitHeadings();
+    runRotator();
     langBtn.textContent = lang === 'ta' ? 'English' : 'தமிழ்';
     langBtn.setAttribute('aria-label', lang === 'ta' ? 'Switch to English' : 'தமிழுக்கு மாற்று');
     document.title = (lang === 'ta' ? 'ராம்பரத் பாஸ்கர்' : 'RamBharath Baskar') + ' · Portfolio';
     try { localStorage.setItem('lang', lang); } catch (e) {}
   }
   langBtn.addEventListener('click', () => setLang(root.lang === 'ta' ? 'en' : 'ta'));
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = matchMedia('(pointer: fine)').matches;
+
+  // Typewriter: "I build <word>", cycling through what I make
+  const ROT = {
+    en: ['admission portals', 'admin dashboards', 'API integrations', 'Laravel apps', 'payment & SMS flows'],
+    ta: ['சேர்க்கை portal-கள்', 'admin dashboard-கள்', 'API ஒருங்கிணைப்புகள்', 'Laravel செயலிகள்', 'payment, SMS வசதிகள்'],
+  };
+  const rotator = document.getElementById('rotator');
+  const toUnits = s => graphemes ? [...graphemes.segment(s)].map(x => x.segment) : [...s];
+  let rotTimer, rotIdx = 0;
+  function runRotator() {
+    clearTimeout(rotTimer);
+    const words = ROT[root.lang === 'ta' ? 'ta' : 'en'];
+    if (reduceMotion) { rotator.textContent = words[0]; return; }
+    let chars = toUnits(words[rotIdx % words.length]), n = 0, deleting = false;
+    const tick = () => {
+      rotator.textContent = chars.slice(0, n).join('');
+      if (!deleting && n < chars.length) { n++; rotTimer = setTimeout(tick, 75); }
+      else if (!deleting) { deleting = true; rotTimer = setTimeout(tick, 1900); }
+      else if (n > 0) { n--; rotTimer = setTimeout(tick, 35); }
+      else { deleting = false; rotIdx++; chars = toUnits(words[rotIdx % words.length]); rotTimer = setTimeout(tick, 350); }
+    };
+    tick();
+  }
+
   let savedLang = 'en';
   try { savedLang = localStorage.getItem('lang') || 'en'; } catch (e) {}
   if (savedLang === 'ta') setLang('ta'); else splitHeadings();
+  setTimeout(runRotator, 1100);
 
   document.getElementById('yr').textContent = new Date().getFullYear();
   try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch (e) {}
@@ -839,14 +1018,30 @@
   }
 
   // Cards in the same row arrive one after another
-  document.querySelectorAll('.grid, .projects, .timeline').forEach(group => {
+  document.querySelectorAll('.grid, .projects, .timeline, .stats').forEach(group => {
     [...group.children].forEach((child, i) => child.style.setProperty('--d', `${i * 120}ms`));
   });
 
   // Fade sections in as they enter the viewport; afterwards hand back the quick hover transitions
   const reveals = document.querySelectorAll('.reveal');
+  // Numbers count up from zero when they scroll into view
+  const counts = document.querySelectorAll('.count');
+  counts.forEach(c => { if (!reduceMotion) c.textContent = '0'; });
+  function countUp(el) {
+    const to = +el.dataset.to;
+    if (reduceMotion) { el.textContent = to; return; }
+    const start = performance.now(), dur = 1600;
+    const step = now => {
+      const p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
   const show = el => {
     el.classList.add('in');
+    el.querySelectorAll('.count').forEach(countUp);
     setTimeout(() => el.classList.add('done'), 1600 + (parseInt(el.style.getPropertyValue('--d')) || 0));
   };
   if ('IntersectionObserver' in window) {
@@ -856,6 +1051,111 @@
     reveals.forEach(el => io.observe(el));
   } else {
     reveals.forEach(show);
+  }
+
+  // Ribbon: repeat the words once so the loop is seamless
+  document.querySelectorAll('.marquee .track').forEach(track => {
+    [...track.children].forEach(child => track.append(child.cloneNode(true)));
+  });
+
+  // Hero constellation: drifting gold dots joined by faint lines, nudged away by the mouse
+  const canvas = document.getElementById('dust');
+  if (canvas && canvas.getContext) {
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0, dots = [], running = !reduceMotion, raf;
+    const mouse = { x: -9999, y: -9999 };
+    function resize() {
+      const r = canvas.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
+      W = r.width; H = r.height;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const n = Math.round(Math.min(70, W * H / 15000));
+      dots = Array.from({ length: n }, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3, r: Math.random() * 1.6 + .5,
+      }));
+    }
+    function frame() {
+      const gold = getComputedStyle(root).getPropertyValue('--gold').trim() || '#9c7a45';
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = ctx.strokeStyle = gold;
+      for (const d of dots) {
+        if (!reduceMotion) {
+          d.x += d.vx; d.y += d.vy;
+          if (d.x < 0 || d.x > W) d.vx *= -1;
+          if (d.y < 0 || d.y > H) d.vy *= -1;
+          const dx = d.x - mouse.x, dy = d.y - mouse.y, dist = Math.hypot(dx, dy);
+          if (dist > 0 && dist < 120) { d.x += dx / dist * 1.4; d.y += dy / dist * 1.4; }
+        }
+        ctx.globalAlpha = .55;
+        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.lineWidth = .6;
+      for (let i = 0; i < dots.length; i++) {
+        for (let j = i + 1; j < dots.length; j++) {
+          const a = dots[i], b = dots[j], dist = Math.hypot(a.x - b.x, a.y - b.y);
+          if (dist < 120) {
+            ctx.globalAlpha = (1 - dist / 120) * .25;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+      if (running) raf = requestAnimationFrame(frame);
+    }
+    resize(); frame();
+    addEventListener('resize', () => { resize(); if (!running) frame(); });
+    addEventListener('mousemove', e => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    }, { passive: true });
+    document.getElementById('themeBtn').addEventListener('click', () => { if (!running) frame(); });
+    // Only animate while the hero is on screen
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => {
+        cancelAnimationFrame(raf);
+        running = entry.isIntersecting;
+        if (running) frame();
+      }).observe(canvas);
+    }
+  }
+
+  // Cards: gold glow follows the pointer, and a gentle 3D tilt for mouse users
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      card.style.setProperty('--mx', x + 'px');
+      card.style.setProperty('--my', y + 'px');
+      if (finePointer && !reduceMotion && card.classList.contains('done')) {
+        const rx = (y / r.height - .5) * -5, ry = (x / r.width - .5) * 5;
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      }
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.transform = '';
+      card.style.removeProperty('--mx');
+      card.style.removeProperty('--my');
+    });
+  });
+
+  // Soft gold ring trailing the mouse; it grows over links and buttons
+  if (finePointer && !reduceMotion) {
+    const ring = document.createElement('div');
+    ring.className = 'cursor';
+    ring.setAttribute('aria-hidden', 'true');
+    document.body.append(ring);
+    let x = 0, y = 0, tx = 0, ty = 0;
+    addEventListener('mousemove', e => {
+      tx = e.clientX; ty = e.clientY;
+      ring.classList.add('on');
+      ring.classList.toggle('big', !!e.target.closest('a, button'));
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => ring.classList.remove('on'));
+    (function follow() {
+      x += (tx - x) * .18; y += (ty - y) * .18;
+      ring.style.transform = `translate(${x}px, ${y}px)`;
+      requestAnimationFrame(follow);
+    })();
   }
 </script>
 </body>
